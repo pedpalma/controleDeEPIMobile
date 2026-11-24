@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="verde_seguranca">#1B5E20</color>
+    <color name="verde_seguranca_escuro">#0F3D13</color>
+    <color name="verde_claro">#E3F1E4</color>
+    <color name="amarelo_alerta">#FFB300</color>
+    <color name="amarelo_claro">#FFF4D6</color>
+    <color name="fundo">#F2F4F3</color>
+    <color name="cartao">#FFFFFF</color>
+    <color name="borda">#DCE3DF</color>
+    <color name="texto_principal">#1C2321</color>
+    <color name="texto_suave">#5F6B66</color>
+    <color name="branco">#FFFFFF</color>
+    <color name="situacao_ok">#2E7D32</color>
+    <color name="situacao_alerta">#E65100</color>
+    <color name="situacao_vencido">#C62828</color>
+</resources>
