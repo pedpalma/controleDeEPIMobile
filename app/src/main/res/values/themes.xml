@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ControleEpi" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/verde_seguranca</item>
+        <item name="colorPrimaryVariant">@color/verde_seguranca_escuro</item>
+        <item name="colorOnPrimary">@color/branco</item>
+        <item name="colorSecondary">@color/amarelo_alerta</item>
+        <item name="colorSecondaryVariant">@color/amarelo_alerta</item>
+        <item name="colorOnSecondary">@color/texto_principal</item>
+        <item name="android:statusBarColor">@color/verde_seguranca_escuro</item>
+        <item name="android:windowBackground">@color/fundo</item>
+        <item name="android:textColorPrimary">@color/texto_principal</item>
+        <item name="android:textColorSecondary">@color/texto_suave</item>
+    </style>
+
+    <style name="Theme.ControleEpi.SemBarra" parent="Theme.ControleEpi">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Titulo">
+        <item name="android:textColor">@color/texto_principal</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Subtitulo">
+        <item name="android:textColor">@color/texto_suave</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Rotulo">
+        <item name="android:textColor">@color/texto_suave</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style name="Selo">
+        <item name="android:background">@drawable/fundo_selo</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:textColor">@color/branco</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Campo" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="android:layout_marginTop">@dimen/espaco_campos</item>
+        <item name="boxBackgroundColor">@color/cartao</item>
+    </style>
+
+    <style name="BotaoPrincipal" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="iconGravity">textStart</item>
+    </style>
+</resources>

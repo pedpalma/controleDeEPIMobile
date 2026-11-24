@@ -1,0 +1,1 @@
+-keepclassmembers class br.senai.sp.controleepi.model.** { *; }

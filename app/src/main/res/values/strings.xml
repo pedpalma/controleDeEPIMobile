@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Controle de EPI</string>
+    <string name="slogan">Entrega e validade de EPI sem ficha de papel</string>
+    <string name="msg_sem_internet">Sem conexão com a internet. Tente de novo.</string>
+    <string name="msg_erro_generico">Algo deu errado. Tente de novo.</string>
+    <string name="acao_sair">Sair</string>
+    <string name="btn_salvar">Salvar</string>
+    <string name="btn_cancelar">Cancelar</string>
+</resources>
