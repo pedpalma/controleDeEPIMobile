@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="titulo_minhas_entregas">Minhas entregas de EPI</string>
+    <string name="cadastro_pendente">Seu cadastro de colaborador ainda não foi feito pelo técnico de segurança.</string>
+    <string name="vazio_minhas_entregas_titulo">Nenhuma entrega registrada</string>
+    <string name="vazio_minhas_entregas_dica">Quando o técnico de segurança registrar a entrega de um EPI para você, ela aparece aqui para você confirmar.</string>
+</resources>
