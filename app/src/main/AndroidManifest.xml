@@ -38,6 +38,10 @@
             android:name=".MinhasEntregasActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".EpisActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
