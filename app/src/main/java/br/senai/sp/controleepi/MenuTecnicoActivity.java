@@ -1,5 +1,6 @@
 package br.senai.sp.controleepi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,9 @@ public class MenuTecnicoActivity extends AppCompatActivity {
         setTitle(R.string.titulo_menu_tecnico);
 
         txtSaudacao = findViewById(R.id.txtSaudacao);
+
+        findViewById(R.id.cardEpis).setOnClickListener(v ->
+                startActivity(new Intent(this, EpisActivity.class)));
 
         carregarNome();
     }
