@@ -1,5 +1,6 @@
 package br.senai.sp.controleepi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -48,9 +49,12 @@ public class EpisActivity extends AppCompatActivity {
         txtVazioTitulo = findViewById(R.id.txtVazioTitulo);
         txtVazioDica = findViewById(R.id.txtVazioDica);
 
-        adapter = new EpiAdapter(epis, null);
+        adapter = new EpiAdapter(epis, this::abrirEdicao);
         lista.setLayoutManager(new LinearLayoutManager(this));
         lista.setAdapter(adapter);
+
+        findViewById(R.id.btnNovoEpi).setOnClickListener(v ->
+                startActivity(new Intent(this, EpiFormActivity.class)));
     }
 
     @Override
@@ -93,6 +97,12 @@ public class EpisActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    private void abrirEdicao(Epi epi) {
+        Intent intent = new Intent(this, EpiFormActivity.class);
+        intent.putExtra(EpiFormActivity.EXTRA_EPI_ID, epi.getId());
+        startActivity(intent);
     }
 
     private void mostrarVazio(String titulo, String dica) {
