@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="titulo_menu_tecnico">Painel do técnico</string>
+    <string name="saudacao_padrao">Olá!</string>
+    <string name="subtitulo_menu_tecnico">Técnico de segurança do trabalho</string>
+    <string name="card_epis">EPIs</string>
+    <string name="card_epis_desc">Cadastro de EPIs, número e validade do CA</string>
+    <string name="card_colaboradores">Colaboradores</string>
+    <string name="card_colaboradores_desc">Cadastro, busca por matrícula e ficha de entregas</string>
+    <string name="card_nova_entrega">Registrar entrega</string>
+    <string name="card_nova_entrega_desc">Entregar EPI para um colaborador</string>
+    <string name="card_ca_vencendo">CA vencido ou vencendo</string>
+    <string name="card_ca_vencendo_desc">EPIs com CA vencido ou que vence nos próximos 30 dias</string>
+</resources>

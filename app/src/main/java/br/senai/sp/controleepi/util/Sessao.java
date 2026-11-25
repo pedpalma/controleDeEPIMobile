@@ -9,6 +9,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import br.senai.sp.controleepi.AguardandoPerfilActivity;
 import br.senai.sp.controleepi.LoginActivity;
+import br.senai.sp.controleepi.MenuTecnicoActivity;
+import br.senai.sp.controleepi.MinhasEntregasActivity;
 
 public final class Sessao {
 
@@ -34,7 +36,16 @@ public final class Sessao {
                 .collection(Colecoes.USUARIOS)
                 .document(uid)
                 .get()
-                .addOnSuccessListener(documento -> abrir(origem, AguardandoPerfilActivity.class))
+                .addOnSuccessListener(documento -> {
+                    String perfil = documento.getString("perfil");
+                    if (Colecoes.PERFIL_TECNICO.equals(perfil)) {
+                        abrir(origem, MenuTecnicoActivity.class);
+                    } else if (Colecoes.PERFIL_COLABORADOR.equals(perfil)) {
+                        abrir(origem, MinhasEntregasActivity.class);
+                    } else {
+                        abrir(origem, AguardandoPerfilActivity.class);
+                    }
+                })
                 .addOnFailureListener(e -> aoFalhar.run());
     }
 
