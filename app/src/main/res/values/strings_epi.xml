@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="titulo_epis">EPIs cadastrados</string>
+    <string name="vazio_epis_titulo">Nenhum EPI cadastrado</string>
+    <string name="vazio_epis_dica">Toque em + para cadastrar o primeiro EPI com o número e a validade do CA.</string>
+</resources>
