@@ -1,0 +1,75 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function logado() {
+      return request.auth != null;
+    }
+
+    function ehDono(uid) {
+      return logado() && request.auth.uid == uid;
+    }
+
+    function perfil() {
+      return get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.get('perfil', '');
+    }
+
+    function ehTecnico() {
+      return logado()
+        && exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
+        && perfil() == 'tecnico';
+    }
+
+    function ehColaborador() {
+      return logado()
+        && exists(/databases/$(database)/documents/usuarios/$(request.auth.uid))
+        && perfil() == 'colaborador';
+    }
+
+    match /usuarios/{uid} {
+      allow read: if ehDono(uid) || ehTecnico();
+      allow create: if ehDono(uid)
+        && request.resource.data.keys().hasOnly(['nome', 'email'])
+        && request.resource.data.nome is string
+        && request.resource.data.email == request.auth.token.email;
+      allow update, delete: if false;
+    }
+
+    match /epis/{epiId} {
+      allow read: if ehTecnico();
+      allow create, update: if ehTecnico()
+        && request.resource.data.descricao is string
+        && request.resource.data.descricao.size() >= 3
+        && request.resource.data.ca is string
+        && request.resource.data.validadeCa is timestamp;
+      allow delete: if ehTecnico();
+    }
+
+    match /colaboradores/{uid} {
+      allow read: if ehTecnico() || ehDono(uid);
+      allow write: if ehTecnico();
+    }
+
+    match /entregas/{entregaId} {
+      allow read: if ehTecnico()
+        || (ehColaborador() && resource.data.colaboradorUid == request.auth.uid);
+
+      allow create: if ehTecnico()
+        && request.resource.data.confirmado == false
+        && request.resource.data.quantidade is int
+        && request.resource.data.quantidade > 0
+        && request.resource.data.tecnicoUid == request.auth.uid
+        && exists(/databases/$(database)/documents/colaboradores/$(request.resource.data.colaboradorUid));
+
+      allow update: if ehColaborador()
+        && resource.data.colaboradorUid == request.auth.uid
+        && resource.data.confirmado == false
+        && request.resource.data.confirmado == true
+        && request.resource.data.confirmadoEm == request.time
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['confirmado', 'confirmadoEm']);
+
+      allow delete: if false;
+    }
+  }
+}
