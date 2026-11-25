@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <ImageView
+        android:layout_width="@dimen/tamanho_icone_vazio"
+        android:layout_height="@dimen/tamanho_icone_vazio"
+        android:background="@drawable/fundo_icone_circulo"
+        android:contentDescription="@string/titulo_aguardando"
+        android:padding="16dp"
+        android:src="@drawable/ic_pendente" />
+
+    <TextView
+        style="@style/Titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/titulo_aguardando" />
+
+    <TextView
+        android:id="@+id/txtEmailConta"
+        style="@style/Subtitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textStyle="bold" />
+
+    <TextView
+        style="@style/Subtitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/msg_aguardando" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnVerificar"
+        style="@style/BotaoPrincipal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_verificar_novamente" />
+
+    <ProgressBar
+        android:id="@+id/progresso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:visibility="gone" />
+</LinearLayout>
