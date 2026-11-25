@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dica_email">E-mail</string>
+    <string name="dica_senha">Senha</string>
+    <string name="btn_entrar">Entrar</string>
+    <string name="btn_ir_cadastro">Ainda não tenho conta</string>
+    <string name="titulo_cadastro_conta">Criar conta</string>
+    <string name="subtitulo_cadastro_conta">Depois de criar a conta, o técnico de segurança libera o seu perfil.</string>
+    <string name="dica_nome">Nome completo</string>
+    <string name="dica_confirmar_senha">Confirmar senha</string>
+    <string name="btn_criar_conta">Criar conta</string>
+    <string name="titulo_aguardando">Perfil em análise</string>
+    <string name="msg_aguardando">Sua conta foi criada, mas ainda não tem um perfil definido. Peça ao técnico de segurança para liberar o seu acesso como colaborador ou técnico.</string>
+    <string name="btn_verificar_novamente">Verificar novamente</string>
+</resources>
