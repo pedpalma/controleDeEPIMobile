@@ -3,4 +3,12 @@
     <string name="titulo_epis">EPIs cadastrados</string>
     <string name="vazio_epis_titulo">Nenhum EPI cadastrado</string>
     <string name="vazio_epis_dica">Toque em + para cadastrar o primeiro EPI com o número e a validade do CA.</string>
+    <string name="btn_novo_epi">Novo EPI</string>
+    <string name="titulo_novo_epi">Novo EPI</string>
+    <string name="titulo_editar_epi">Editar EPI</string>
+    <string name="dica_descricao_epi">Descrição (ex.: Luva nitrílica tam. 9)</string>
+    <string name="dica_ca">Número do CA</string>
+    <string name="dica_validade_ca">Validade do CA</string>
+    <string name="rotulo_dados_epi">Dados do EPI</string>
+    <string name="rotulo_certificado">Certificado de Aprovação</string>
 </resources>
