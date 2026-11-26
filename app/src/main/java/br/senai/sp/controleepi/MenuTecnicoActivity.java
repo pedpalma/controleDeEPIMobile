@@ -29,6 +29,8 @@ public class MenuTecnicoActivity extends AppCompatActivity {
 
         findViewById(R.id.cardEpis).setOnClickListener(v ->
                 startActivity(new Intent(this, EpisActivity.class)));
+        findViewById(R.id.cardColaboradores).setOnClickListener(v ->
+                startActivity(new Intent(this, ColaboradoresActivity.class)));
 
         carregarNome();
     }
