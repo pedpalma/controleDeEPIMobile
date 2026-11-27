@@ -6,12 +6,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -23,6 +26,7 @@ import br.senai.sp.controleepi.adapter.EntregaAdapter;
 import br.senai.sp.controleepi.model.Colaborador;
 import br.senai.sp.controleepi.model.Entrega;
 import br.senai.sp.controleepi.util.Colecoes;
+import br.senai.sp.controleepi.util.Datas;
 import br.senai.sp.controleepi.util.MensagensFirebase;
 import br.senai.sp.controleepi.util.Sessao;
 
@@ -64,7 +68,7 @@ public class MinhasEntregasActivity extends AppCompatActivity {
         txtDadosColaborador = findViewById(R.id.txtDadosColaborador);
         txtPendentes = findViewById(R.id.txtPendentes);
 
-        adapter = new EntregaAdapter(entregas);
+        adapter = new EntregaAdapter(entregas, this::perguntarConfirmacao);
         lista.setLayoutManager(new LinearLayoutManager(this));
         lista.setAdapter(adapter);
 
@@ -141,6 +145,28 @@ public class MinhasEntregasActivity extends AppCompatActivity {
         } else {
             txtPendentes.setText(pendentes + " entregas aguardando sua confirmação");
         }
+    }
+
+    private void perguntarConfirmacao(Entrega entrega) {
+        String mensagem = "Você confirma que recebeu " + entrega.getQuantidade() + " × "
+                + entrega.getEpiDescricao() + " (CA " + entrega.getEpiCa() + ") em "
+                + Datas.formatar(entrega.getData()) + "?";
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.titulo_dialogo_confirmar)
+                .setMessage(mensagem)
+                .setPositiveButton(R.string.btn_confirmar, (dialogo, botao) -> confirmar(entrega))
+                .setNegativeButton(R.string.btn_cancelar, null)
+                .show();
+    }
+
+    private void confirmar(Entrega entrega) {
+        banco.collection(Colecoes.ENTREGAS)
+                .document(entrega.getId())
+                .update("confirmado", true, "confirmadoEm", FieldValue.serverTimestamp())
+                .addOnSuccessListener(nada ->
+                        Toast.makeText(this, "Recebimento confirmado", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(erro ->
+                        Toast.makeText(this, MensagensFirebase.traduzir(erro), Toast.LENGTH_LONG).show());
     }
 
     private int compararDatas(Entrega a, Entrega b) {
