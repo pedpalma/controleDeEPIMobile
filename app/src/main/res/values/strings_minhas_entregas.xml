@@ -6,4 +6,7 @@
     <string name="vazio_minhas_entregas_dica">Quando o técnico de segurança registrar a entrega de um EPI para você, ela aparece aqui para você confirmar.</string>
     <string name="status_confirmado">Confirmado</string>
     <string name="status_pendente">Aguardando confirmação</string>
+    <string name="btn_confirmar_recebimento">Confirmar recebimento</string>
+    <string name="titulo_dialogo_confirmar">Confirmar recebimento</string>
+    <string name="btn_confirmar">Confirmar</string>
 </resources>

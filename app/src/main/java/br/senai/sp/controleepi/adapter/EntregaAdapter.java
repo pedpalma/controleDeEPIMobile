@@ -4,6 +4,7 @@ import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,14 +19,21 @@ import br.senai.sp.controleepi.util.Datas;
 
 public class EntregaAdapter extends RecyclerView.Adapter<EntregaAdapter.EntregaViewHolder> {
 
-    private final List<Entrega> lista;
+    public interface AoConfirmar {
+        void aoConfirmar(Entrega entrega);
+    }
 
-    public EntregaAdapter(List<Entrega> lista) {
+    private final List<Entrega> lista;
+    private final AoConfirmar aoConfirmar;
+
+    public EntregaAdapter(List<Entrega> lista, AoConfirmar aoConfirmar) {
         this.lista = lista;
+        this.aoConfirmar = aoConfirmar;
     }
 
     public static class EntregaViewHolder extends RecyclerView.ViewHolder {
         TextView txtEpi, txtStatus, txtDetalhes, txtData;
+        Button btnConfirmar;
 
         public EntregaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -33,6 +41,7 @@ public class EntregaAdapter extends RecyclerView.Adapter<EntregaAdapter.EntregaV
             txtStatus = itemView.findViewById(R.id.txtStatus);
             txtDetalhes = itemView.findViewById(R.id.txtDetalhes);
             txtData = itemView.findViewById(R.id.txtData);
+            btnConfirmar = itemView.findViewById(R.id.btnConfirmar);
         }
     }
 
@@ -62,6 +71,13 @@ public class EntregaAdapter extends RecyclerView.Adapter<EntregaAdapter.EntregaV
         holder.txtStatus.setBackgroundTintList(ColorStateList.valueOf(
                 ContextCompat.getColor(holder.itemView.getContext(), cor)));
 
+        if (aoConfirmar != null && !entrega.isConfirmado()) {
+            holder.btnConfirmar.setVisibility(View.VISIBLE);
+            holder.btnConfirmar.setOnClickListener(v -> aoConfirmar.aoConfirmar(entrega));
+        } else {
+            holder.btnConfirmar.setVisibility(View.GONE);
+            holder.btnConfirmar.setOnClickListener(null);
+        }
     }
 
     @Override
