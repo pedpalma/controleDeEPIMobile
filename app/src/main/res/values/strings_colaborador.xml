@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="titulo_colaboradores">Colaboradores</string>
+    <string name="vazio_colaboradores_titulo">Nenhum colaborador cadastrado</string>
+    <string name="vazio_colaboradores_dica">Toque em + para ligar a conta de um colaborador ao cadastro dele.</string>
+</resources>
