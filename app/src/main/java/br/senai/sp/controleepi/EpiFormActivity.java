@@ -31,6 +31,7 @@ public class EpiFormActivity extends AppCompatActivity {
     private static final String CHAVE_VALIDADE = "validade";
 
     private TextInputLayout campoDescricao;
+    private TextInputLayout campoEstoque;
     private TextInputLayout campoCa;
     private TextInputLayout campoValidade;
     private EditText editValidade;
@@ -49,6 +50,7 @@ public class EpiFormActivity extends AppCompatActivity {
         }
 
         campoDescricao = findViewById(R.id.campoDescricao);
+        campoEstoque = findViewById(R.id.campoEstoque);
         campoCa = findViewById(R.id.campoCa);
         campoValidade = findViewById(R.id.campoValidade);
         editValidade = findViewById(R.id.editValidade);
@@ -96,6 +98,7 @@ public class EpiFormActivity extends AppCompatActivity {
                         return;
                     }
                     preencher(campoDescricao, epi.getDescricao());
+                    preencher(campoEstoque, String.valueOf(epi.getEstoque()));
                     preencher(campoCa, epi.getCa());
                     validade = Datas.paraLocalDate(epi.getValidadeCa());
                     mostrarValidade();
@@ -129,12 +132,13 @@ public class EpiFormActivity extends AppCompatActivity {
 
     private boolean formularioValido() {
         boolean descricaoOk = Validacao.minimo(campoDescricao, 3, "Informe a descrição do EPI");
+        Integer estoque = Validacao.inteiroNaoNegativo(campoEstoque, "o estoque");
         boolean caOk = Validacao.obrigatorio(campoCa, "Informe o número do CA");
         boolean validadeOk = validade != null;
         if (!validadeOk) {
             campoValidade.setError("Escolha a data de validade do CA");
         }
-        return descricaoOk && caOk && validadeOk;
+        return descricaoOk && estoque != null && caOk && validadeOk;
     }
 
     private void salvar() {
@@ -144,6 +148,7 @@ public class EpiFormActivity extends AppCompatActivity {
 
         Map<String, Object> dados = new HashMap<>();
         dados.put("descricao", Validacao.texto(campoDescricao));
+        dados.put("estoque", Integer.parseInt(Validacao.texto(campoEstoque)));
         dados.put("ca", Validacao.texto(campoCa));
         dados.put("validadeCa", Datas.paraTimestamp(validade));
 

@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -147,7 +149,7 @@ public class NovaEntregaActivity extends AppCompatActivity {
         int posicaoEpi = 0;
         for (int i = 0; i < epis.size(); i++) {
             Epi epi = epis.get(i);
-            descricoes.add(epi.getDescricao() + " · CA " + epi.getCa());
+            descricoes.add(epi.getDescricao() + " · CA " + epi.getCa() + " · estoque " + epi.getEstoque());
             if (epi.getId().equals(epiPendente)) {
                 posicaoEpi = i + 1;
             }
@@ -210,6 +212,9 @@ public class NovaEntregaActivity extends AppCompatActivity {
         }
 
         carregando(true);
+        DocumentReference refEpi = banco.collection(Colecoes.EPIS).document(epi.getId());
+        DocumentReference refEntrega = banco.collection(Colecoes.ENTREGAS).document();
+
         Map<String, Object> entrega = new HashMap<>();
         entrega.put("colaboradorUid", colaborador.getUid());
         entrega.put("colaboradorNome", colaborador.getNome());
@@ -222,9 +227,18 @@ public class NovaEntregaActivity extends AppCompatActivity {
         entrega.put("confirmado", false);
         entrega.put("tecnicoUid", Sessao.uid());
 
-        banco.collection(Colecoes.ENTREGAS)
-                .add(entrega)
-                .addOnSuccessListener(referencia -> {
+        banco.runTransaction(transacao -> {
+                    DocumentSnapshot atual = transacao.get(refEpi);
+                    Long estoque = atual.getLong("estoque");
+                    long disponivel = estoque == null ? 0 : estoque;
+                    if (disponivel < quantidade) {
+                        throw new EstoqueInsuficienteException(disponivel);
+                    }
+                    transacao.update(refEpi, "estoque", disponivel - quantidade);
+                    transacao.set(refEntrega, entrega);
+                    return null;
+                })
+                .addOnSuccessListener(nada -> {
                     Toast.makeText(this, "Entrega registrada. Aguardando confirmação do colaborador.",
                             Toast.LENGTH_LONG).show();
                     finish();
@@ -234,7 +248,12 @@ public class NovaEntregaActivity extends AppCompatActivity {
 
     private void mostrarErro(Exception erro) {
         carregando(false);
-        Toast.makeText(this, MensagensFirebase.traduzir(erro), Toast.LENGTH_LONG).show();
+        Throwable causa = erro;
+        while (causa != null && !(causa instanceof EstoqueInsuficienteException)) {
+            causa = causa.getCause();
+        }
+        String mensagem = causa != null ? causa.getMessage() : MensagensFirebase.traduzir(erro);
+        Toast.makeText(this, mensagem, Toast.LENGTH_LONG).show();
     }
 
     private void carregando(boolean ativo) {
@@ -242,4 +261,9 @@ public class NovaEntregaActivity extends AppCompatActivity {
         btnRegistrar.setEnabled(!ativo);
     }
 
+    private static class EstoqueInsuficienteException extends RuntimeException {
+        EstoqueInsuficienteException(long disponivel) {
+            super("Estoque insuficiente. Disponível: " + disponivel + " un.");
+        }
+    }
 }

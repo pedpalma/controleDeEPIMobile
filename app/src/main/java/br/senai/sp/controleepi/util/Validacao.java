@@ -69,4 +69,24 @@ public final class Validacao {
             return null;
         }
     }
+
+    public static Integer inteiroNaoNegativo(TextInputLayout campo, String nomeCampo) {
+        String valor = texto(campo);
+        if (valor.isEmpty()) {
+            campo.setError("Informe " + nomeCampo);
+            return null;
+        }
+        try {
+            int numero = Integer.parseInt(valor);
+            if (numero < 0) {
+                campo.setError("O valor não pode ser negativo");
+                return null;
+            }
+            campo.setError(null);
+            return numero;
+        } catch (NumberFormatException e) {
+            campo.setError("Número inválido");
+            return null;
+        }
+    }
 }
