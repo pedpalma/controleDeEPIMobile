@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="titulo_nova_entrega">Registrar entrega</string>
+    <string name="rotulo_colaborador">Colaborador</string>
+    <string name="rotulo_epi">EPI entregue</string>
+    <string name="rotulo_motivo">Motivo da entrega</string>
+    <string name="dica_quantidade">Quantidade</string>
+    <string name="dica_data_entrega">Data da entrega</string>
+    <string name="btn_registrar_entrega">Registrar entrega</string>
+    <string name="selecione_colaborador">Selecione o colaborador</string>
+    <string name="selecione_epi">Selecione o EPI</string>
+    <string-array name="motivos_entrega">
+        <item>Primeira entrega</item>
+        <item>Troca por desgaste</item>
+        <item>Perda</item>
+        <item>Tamanho errado</item>
+    </string-array>
+</resources>

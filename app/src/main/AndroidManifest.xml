@@ -50,6 +50,14 @@
             android:name=".ColaboradoresActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".ColaboradorFormActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".NovaEntregaActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
