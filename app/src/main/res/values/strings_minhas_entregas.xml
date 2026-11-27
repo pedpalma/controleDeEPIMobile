@@ -4,4 +4,6 @@
     <string name="cadastro_pendente">Seu cadastro de colaborador ainda não foi feito pelo técnico de segurança.</string>
     <string name="vazio_minhas_entregas_titulo">Nenhuma entrega registrada</string>
     <string name="vazio_minhas_entregas_dica">Quando o técnico de segurança registrar a entrega de um EPI para você, ela aparece aqui para você confirmar.</string>
+    <string name="status_confirmado">Confirmado</string>
+    <string name="status_pendente">Aguardando confirmação</string>
 </resources>
