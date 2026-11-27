@@ -62,6 +62,10 @@
             android:name=".FichaColaboradorActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".CaVencendoActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

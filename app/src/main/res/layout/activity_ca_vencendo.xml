@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fundo"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margem_tela"
+        android:background="@color/amarelo_claro"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/margem_interna">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_alerta" />
+
+        <TextView
+            android:id="@+id/txtLimite"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:textColor="@color/texto_principal"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listaEpis"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/margem_tela"
+            android:paddingEnd="@dimen/margem_tela"
+            android:paddingBottom="@dimen/margem_tela" />
+
+        <ProgressBar
+            android:id="@+id/progresso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/blocoVazio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="@dimen/tamanho_icone_vazio"
+                android:layout_height="@dimen/tamanho_icone_vazio"
+                android:background="@drawable/fundo_icone_circulo"
+                android:importantForAccessibility="no"
+                android:padding="16dp"
+                android:src="@drawable/ic_epi" />
+
+            <TextView
+                android:id="@+id/txtVazioTitulo"
+                style="@style/Titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="@string/vazio_ca_titulo"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/txtVazioDica"
+                style="@style/Subtitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="@string/vazio_ca_dica" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
