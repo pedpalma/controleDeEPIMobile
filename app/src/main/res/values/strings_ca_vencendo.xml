@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="titulo_ca_vencendo">CA vencido ou vencendo</string>
+    <string name="vazio_ca_titulo">Nenhum CA vencendo</string>
+    <string name="vazio_ca_dica">Todos os EPIs têm CA válido por mais de 30 dias.</string>
+</resources>
