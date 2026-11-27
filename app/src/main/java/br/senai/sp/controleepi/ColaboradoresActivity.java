@@ -1,5 +1,6 @@
 package br.senai.sp.controleepi;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -48,9 +49,12 @@ public class ColaboradoresActivity extends AppCompatActivity {
         txtVazioTitulo = findViewById(R.id.txtVazioTitulo);
         txtVazioDica = findViewById(R.id.txtVazioDica);
 
-        adapter = new ColaboradorAdapter(colaboradores, null);
+        adapter = new ColaboradorAdapter(colaboradores, this::abrirFicha);
         lista.setLayoutManager(new LinearLayoutManager(this));
         lista.setAdapter(adapter);
+
+        findViewById(R.id.btnNovoColaborador).setOnClickListener(v ->
+                startActivity(new Intent(this, ColaboradorFormActivity.class)));
     }
 
     @Override
@@ -94,6 +98,12 @@ public class ColaboradoresActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    private void abrirFicha(Colaborador colaborador) {
+        Intent intent = new Intent(this, FichaColaboradorActivity.class);
+        intent.putExtra(FichaColaboradorActivity.EXTRA_COLABORADOR_UID, colaborador.getUid());
+        startActivity(intent);
     }
 
     private void mostrarVazio(String titulo, String dica) {

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="titulo_ficha">Ficha de EPI</string>
+    <string name="rotulo_entregas">Entregas registradas</string>
+    <string name="vazio_ficha_titulo">Nenhuma entrega para este colaborador</string>
+    <string name="vazio_ficha_dica">Toque em Nova entrega para registrar o primeiro EPI entregue.</string>
+    <string name="btn_nova_entrega">Nova entrega</string>
+    <string name="rotulo_total">Total</string>
+    <string name="rotulo_confirmadas">Confirmadas</string>
+    <string name="rotulo_pendentes">Pendentes</string>
+</resources>

@@ -58,6 +58,10 @@
             android:name=".NovaEntregaActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".FichaColaboradorActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
