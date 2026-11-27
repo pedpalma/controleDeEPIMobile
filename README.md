@@ -94,6 +94,125 @@ próximos 30 dias para trocar o lote antes de entregar.
   - Dado um EPI com estoque 10, quando registro a entrega de 2, então o estoque passa para 8.
   - Dado um EPI com estoque 1, quando tento entregar 3, então o app recusa com "Estoque insuficiente".
 
+## Telas
+
+| Login | Painel do técnico | EPIs | Novo EPI |
+|---|---|---|---|
+| ![Login](docs/prints/01-login.png) | ![Painel](docs/prints/02-painel-tecnico.png) | ![EPIs](docs/prints/03-epis.png) | ![Novo EPI](docs/prints/04-novo-epi.png) |
+
+| Colaboradores | Ficha do colaborador | Registrar entrega | CA vencendo | Minhas entregas |
+|---|---|---|---|---|
+| ![Colaboradores](docs/prints/05-colaboradores.png) | ![Ficha](docs/prints/06-ficha.png) | ![Entrega](docs/prints/07-nova-entrega.png) | ![CA](docs/prints/08-ca-vencendo.png) | ![Minhas entregas](docs/prints/09-minhas-entregas.png) |
+
+## Tecnologias
+
+- Android nativo em **Java 17**, `minSdk 30`, Material Components
+- **Firebase Authentication** (e-mail e senha)
+- **Cloud Firestore** com snapshot listeners, transação e regras de segurança por perfil e por dono
+- RecyclerView em todas as listas, com tela de estado vazio
+
+## Estrutura do Firestore
+
+| Coleção | Campos | Quem escreve |
+|---|---|---|
+| `usuarios/{uid}` | `nome`, `email`, `perfil` (`tecnico` ou `colaborador`) | o app cria `nome` e `email`; o **perfil é definido no console** |
+| `epis/{id}` | `descricao`, `ca`, `validadeCa` (timestamp), `estoque` | técnico |
+| `colaboradores/{uid}` | `nome`, `matricula`, `setor`, `email` (o id é o uid da conta do colaborador) | técnico |
+| `entregas/{id}` | `colaboradorUid`, `colaboradorNome`, `epiId`, `epiDescricao`, `epiCa`, `quantidade`, `data`, `motivo`, `confirmado`, `confirmadoEm`, `tecnicoUid` | técnico cria; colaborador só altera `confirmado` e `confirmadoEm` |
+
+A lista de CA vencendo usa uma **consulta por data**:
+`epis.whereLessThan("validadeCa", hoje + 31 dias).orderBy("validadeCa")`.
+
+## Regras de segurança
+
+As regras estão em [`firestore.rules`](firestore.rules). Resumo:
+
+- `usuarios`: cada um lê o próprio documento; o técnico lê todos. Na criação o app só pode gravar `nome` e `email` — **o campo `perfil` é bloqueado**, então ninguém se promove a técnico pelo app.
+- `epis` e `colaboradores`: só o técnico escreve. O colaborador lê apenas o próprio cadastro.
+- `entregas`: o técnico lê tudo e cria; o colaborador **só lê as entregas em que `colaboradorUid` é o uid dele** e só pode mudar `confirmado` de `false` para `true` (e `confirmadoEm`). Ninguém apaga entrega.
+
+Teste para a apresentação: entrar como colaborador e tentar ler `entregas` de outra pessoa no
+Rules Playground do console — a leitura é negada.
+
+## Como configurar o Firebase
+
+1. Crie um projeto no [console do Firebase](https://console.firebase.google.com).
+2. Adicione um app Android com o pacote `br.senai.sp.controleepi`.
+3. Baixe o `google-services.json` e coloque em `app/google-services.json`.
+   **Esse arquivo fica fora do repositório** (está no `.gitignore`).
+4. Em **Authentication › Sign-in method**, ative **E-mail/senha**.
+5. Em **Firestore Database**, crie o banco (modo produção) e cole o conteúdo de
+   `firestore.rules` na aba **Regras**. Clique em **Publicar**.
+6. Abra o projeto no Android Studio, sincronize o Gradle e rode no emulador.
+
+### Definindo o perfil de cada conta
+
+1. Crie a conta pelo próprio app (tela **Ainda não tenho conta**). O app abre a tela "Perfil em análise".
+2. No console, abra **Firestore › usuarios › {uid da conta}**.
+3. Adicione o campo `perfil` (string) com o valor `tecnico` ou `colaborador`.
+4. No app, toque em **Verificar novamente**.
+
+Para o colaborador aparecer para o técnico, depois de definir o perfil `colaborador`, o técnico
+cadastra o colaborador pelo app (tela **Colaboradores › Novo colaborador**) usando o e-mail da conta.
+
+## Contas de teste
+
+| Perfil | E-mail | Senha |
+|---|---|---|
+| Técnico de segurança | `tecnico.seguranca@techinova.com` | `Epi@2026` |
+| Colaborador | `joao.silva@techinova.com` | `Epi@2026` |
+| Colaborador | `maria.souza@techinova.com` | `Epi@2026` |
+
+## Dados de exemplo para a demonstração
+
+| EPI | CA | Validade do CA | Estoque |
+|---|---|---|---|
+| Luva nitrílica tam. 9 | 39136 | daqui a 15 dias (aparece em CA vencendo) | 40 |
+| Óculos de proteção incolor | 10346 | daqui a 2 anos | 25 |
+| Protetor auricular tipo plug | 5745 | vencido há 10 dias (aparece em vermelho) | 200 |
+| Botina de segurança com bico de aço nº 42 | 41287 | daqui a 3 anos | 12 |
+
+| Colaborador | Matrícula | Setor |
+|---|---|---|
+| João da Silva | 10234 | Estamparia |
+| Maria Souza | 10457 | Solda |
+
+## Roteiro da demonstração
+
+1. O técnico registra a entrega de 1 par de **Luva nitrílica tam. 9** para João da Silva.
+2. No aparelho do João, a entrega aparece sozinha e ele toca em **Confirmar recebimento**.
+3. Na ficha do João, no aparelho do técnico, o status muda para **Confirmado**.
+4. O técnico abre **CA vencido ou vencendo** e mostra a luva (vence em 15 dias) e o protetor (vencido).
+
+## Checklist CORE e núcleo comum
+
+| Requisito | Situação | Observação |
+|---|---|---|
+| NC1 – Login e cadastro, sessão mantida, sair no menu | Feito | |
+| NC2 – Firestore com snapshot listener nas listas | Feito | EPIs, colaboradores, entregas, ficha e CA vencendo |
+| NC3 – Regras de segurança com controle de perfil | Feito | `firestore.rules` |
+| NC4 – Perfil em `usuarios/{uid}` definido no console | Feito | regra bloqueia o campo `perfil` na criação |
+| NC5 – RecyclerView e estado vazio | Feito | |
+| NC6 – Formulários validados em português | Feito | |
+| NC7 – Girar a tela não perde o que foi digitado | Feito | datas e seleções salvas em `onSaveInstanceState` |
+| NC8 – README completo, `google-services.json` fora do repo | Feito | |
+| C1 – Cadastro de EPI com CA e validade | Feito | |
+| C2 – Cadastro de colaborador ligado à conta | Feito | vínculo pelo e-mail da conta |
+| C3 – Registro de entrega | Feito | |
+| C4 – Colaborador vê só as próprias entregas e confirma | Feito | garantido pelas regras |
+| C5 – Ficha do colaborador com status de confirmação | Feito | |
+| C6 – Lista de CA vencido ou vencendo em 30 dias | Feito | consulta por data |
+| Complementar – Motivo da troca | Feito | |
+| Complementar – Controle de estoque | Feito | baixa em transação, recusa estoque insuficiente |
+| Complementar – Busca por matrícula | Feito | |
+
+## Próximos passos e limitações
+
+- Foto do EPI e assinatura do colaborador usando Cloudinary.
+- Notificação push quando uma entrega for registrada para o colaborador.
+- Exportar a ficha do colaborador em PDF para a fiscalização.
+- Limitação: o vínculo do colaborador depende de o perfil ter sido definido no console antes do cadastro.
+
 ## Fluxo de trabalho (ES2 e ES3)
 
 - Quadro no GitHub Projects com as colunas **A fazer**, **Fazendo** e **Feito**.
