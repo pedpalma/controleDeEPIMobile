@@ -1,6 +1,5 @@
 package br.senai.sp.controleepi;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -52,9 +51,6 @@ public class ColaboradoresActivity extends AppCompatActivity {
         adapter = new ColaboradorAdapter(colaboradores, null);
         lista.setLayoutManager(new LinearLayoutManager(this));
         lista.setAdapter(adapter);
-
-        findViewById(R.id.btnNovoColaborador).setOnClickListener(v ->
-                startActivity(new Intent(this, ColaboradorFormActivity.class)));
     }
 
     @Override
