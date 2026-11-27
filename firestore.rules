@@ -42,7 +42,9 @@ service cloud.firestore {
         && request.resource.data.descricao is string
         && request.resource.data.descricao.size() >= 3
         && request.resource.data.ca is string
-        && request.resource.data.validadeCa is timestamp;
+        && request.resource.data.validadeCa is timestamp
+        && request.resource.data.estoque is int
+        && request.resource.data.estoque >= 0;
       allow delete: if ehTecnico();
     }
 

@@ -31,12 +31,13 @@ public class EpiAdapter extends RecyclerView.Adapter<EpiAdapter.EpiViewHolder> {
     }
 
     public static class EpiViewHolder extends RecyclerView.ViewHolder {
-        TextView txtDescricao, txtCa, txtSituacao;
+        TextView txtDescricao, txtCa, txtEstoque, txtSituacao;
 
         public EpiViewHolder(@NonNull View itemView) {
             super(itemView);
             txtDescricao = itemView.findViewById(R.id.txtDescricao);
             txtCa = itemView.findViewById(R.id.txtCa);
+            txtEstoque = itemView.findViewById(R.id.txtEstoque);
             txtSituacao = itemView.findViewById(R.id.txtSituacao);
         }
     }
@@ -55,6 +56,10 @@ public class EpiAdapter extends RecyclerView.Adapter<EpiAdapter.EpiViewHolder> {
 
         holder.txtDescricao.setText(epi.getDescricao());
         holder.txtCa.setText("CA " + epi.getCa() + " · validade " + Datas.formatar(epi.getValidadeCa()));
+
+        holder.txtEstoque.setText("Estoque: " + epi.getEstoque() + " un.");
+        int corEstoque = epi.getEstoque() > 0 ? R.color.texto_suave : R.color.situacao_vencido;
+        holder.txtEstoque.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), corEstoque));
 
         holder.txtSituacao.setText(Datas.situacaoCa(epi.getValidadeCa()));
         holder.txtSituacao.setBackgroundTintList(ColorStateList.valueOf(

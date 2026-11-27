@@ -9,6 +9,7 @@
     <string name="dica_descricao_epi">Descrição (ex.: Luva nitrílica tam. 9)</string>
     <string name="dica_ca">Número do CA</string>
     <string name="dica_validade_ca">Validade do CA</string>
+    <string name="dica_estoque">Estoque atual (unidades)</string>
     <string name="rotulo_dados_epi">Dados do EPI</string>
     <string name="rotulo_certificado">Certificado de Aprovação</string>
 </resources>
