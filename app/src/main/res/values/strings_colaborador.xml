@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="titulo_colaboradores">Colaboradores</string>
+    <string name="vazio_colaboradores_titulo">Nenhum colaborador cadastrado</string>
+    <string name="vazio_colaboradores_dica">Toque em + para ligar a conta de um colaborador ao cadastro dele.</string>
+    <string name="btn_novo_colaborador">Novo colaborador</string>
+    <string name="titulo_novo_colaborador">Novo colaborador</string>
+    <string name="subtitulo_novo_colaborador">O colaborador precisa ter criado a conta no app. Informe o mesmo e-mail que ele usou.</string>
+    <string name="dica_matricula">Matrícula</string>
+    <string name="dica_setor">Setor</string>
+    <string name="dica_email_conta">E-mail da conta do colaborador</string>
+    <string-array name="setores">
+        <item>Estamparia</item>
+        <item>Solda</item>
+        <item>Pintura</item>
+        <item>Usinagem</item>
+        <item>Montagem</item>
+        <item>Manutenção</item>
+        <item>Logística</item>
+        <item>Qualidade</item>
+    </string-array>
+</resources>
